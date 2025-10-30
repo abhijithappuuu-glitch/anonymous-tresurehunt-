@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous SDMCET - The Hunt</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the "hacker" theme */
+        body {
+            /* A dark, monospaced font feels more like a terminal */
+            font-family: 'ui-monospace', 'Courier New', Courier, monospace;
+        }
+        
+        /* Glowing effect for the logo */
+        .logo-glow {
+            text-shadow: 0 0 8px rgba(52, 211, 153, 0.7), 0 0 16px rgba(52, 211, 153, 0.5);
+        }
+        
+        /* A subtle flicker animation for the "secret" code */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .cipher-text {
+            animation: flicker 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300 flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main container card -->
+    <div class="bg-gray-800 shadow-2xl rounded-lg overflow-hidden w-full max-w-lg">
+        
+        <!-- Page 1: The Riddle -->
+        <div id="riddlePage" class="p-6 md:p-10">
+            <!-- Header/Logo Area -->
+            <div class="text-center mb-6">
+                <img src="logo.png" alt="Anonymous SDMCET Logo" class="mx-auto mb-4 w-32 h-32 md:w-40 md:h-40 object-contain">
+                <h1 class="text-3xl md:text-4xl font-bold text-emerald-400 logo-glow">ANONYMOUS</h1>
+                <h2 class="text-xl md:text-2xl font-semibold text-gray-400">S.D.M.C.E.T</h2>
+            </div>
+            
+            <!-- The Riddle Content -->
+            <div class="space-y-4">
+                <p class="text-lg text-center">Welcome, Agent. Your first test is here.</p>
+                <p>To find us, you must look in the mirror. The alphabet is reversed. (A=Z, B=Y, C=X...).</p>
+                
+                <p class="text-center text-gray-400">Solve this secret handle to join the hidden:</p>
+                
+                <!-- The Cipher -->
+                <div class="bg-gray-900 p-4 rounded-md text-center">
+                    <p class="text-xl md:text-2xl font-bold text-yellow-400 tracking-widest cipher-text">
+                        ZMLMLBNLFH_HWNXVG
+                    </p>
+                </div>
+                
+                <!-- Answer Form -->
+                <form id="riddleForm" class="pt-4">
+                    <label for="answerInput" class="block text-sm font-medium text-emerald-300 mb-2">Enter Handle:</label>
+                    <input 
+                        type="text" 
+                        id="answerInput"
+                        placeholder="Your answer..."
+                        class="w-full bg-gray-700 border border-gray-600 text-white rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    >
+                    
+                    <!-- Error Message Area -->
+                    <p id="errorMessage" class="text-red-400 text-center text-sm mt-3" style="display: none;">
+                        Access Denied. Try Again, Agent.
+                    </p>
+                    
+                    <button 
+                        type="submit"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-md mt-6 transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Decrypt
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Page 2: The Success Message (Hidden by default) -->
+        <div id="successPage" class="p-6 md:p-10 text-center" style="display: none;">
+            <h1 class="text-3xl font-bold text-emerald-400 logo-glow mb-4">ACCESS GRANTED</h1>
+            
+            <div class="space-y-4 text-lg">
+                <p>Congratulations, Agent. You are eligible to enter our secret society.</p>
+                <p class="font-bold">Before you proceed, you <span class="text-yellow-400">MUST</span> follow our Instagram page. This is where all your hunt details will be provided.</p>
+                
+                <div class="bg-gray-900 text-yellow-300 p-4 rounded-md my-4">
+                    <p class="font-bold text-xl">Event Timer Active:</p>
+                    <p>Today, 2:30 PM to Tomorrow, 2:30 PM</p>
+                </div>
+                
+                <p>All the best. Stay safe.</p>
+                
+                <!-- Instagram Link Button -->
+                <a 
+                    href="https://www.instagram.com/anonymous_sdmcet?igsh=MTFwZTFzdGRveWEwaQ==" 
+                    target="_blank" 
+                    class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-md mt-6 transition duration-300 ease-in-out transform hover:scale-105"
+                >
+                    Follow on Instagram
+                </a>
+                
+                <p class="text-gray-500 text-sm italic pt-4">
+                    ... Ambush in Darkness ...
+                </p>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Get all the elements we need from the document
+        const riddleForm = document.getElementById('riddleForm');
+        const answerInput = document.getElementById('answerInput');
+        const errorMessage = document.getElementById('errorMessage');
+        const riddlePage = document.getElementById('riddlePage');
+        const successPage = document.getElementById('successPage');
+        
+        // This is the correct answer.
+        const correctAnswer = 'anonymous_sdmcet';
+
+        // Listen for when the user clicks the "Decrypt" button
+        riddleForm.addEventListener('submit', function(event) {
+            // Stop the form from refreshing the page
+            event.preventDefault(); 
+            
+            // Get the user's answer, remove extra spaces, and make it all lowercase
+            // This ensures 'Anonymous_Sdmcet ' still works
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            
+            // Check if the user's answer matches the correct answer
+            if (userAnswer === correctAnswer) {
+                // CORRECT ANSWER
+                // Hide the error message
+                errorMessage.style.display = 'none';
+                
+                // Hide the riddle page
+                riddlePage.style.display = 'none';
+                
+                // Show the success page
+                successPage.style.display = 'block';
+                
+            } else {
+                // WRONG ANSWER
+                // Show the error message
+                errorMessage.style.display = 'block';
+                // Clear the input field for them to try again
+                answerInput.value = '';
+            }
+        });
+    </script>
+
+</body>
+</html>
